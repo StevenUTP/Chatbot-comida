@@ -8,9 +8,7 @@ from openai import OpenAI
 load_dotenv()
 
 API_KEY = os.getenv("OPENAI_API_KEY")
-# Modelo configurable desde .env. "gpt-4o-mini" es económico y ampliamente
-# disponible. Si tu cuenta tiene acceso a otro modelo (p.ej. gpt-5-mini),
-# cambia OPENAI_CHAT_MODEL en el archivo .env sin tocar este código.
+
 CHAT_MODEL = os.getenv("OPENAI_CHAT_MODEL", "gpt-4o-mini")
 TRANSCRIBE_MODEL = os.getenv("OPENAI_TRANSCRIBE_MODEL", "whisper-1")
 
@@ -69,9 +67,6 @@ def consultar_chatbot(pregunta: str) -> str:
         )
 
 
-# ---------------------------------------------------------------------------
-# Parte 1: entrada por texto
-# ---------------------------------------------------------------------------
 pregunta = st.chat_input("Escribe una pregunta sobre comida peruana")
 
 if pregunta:
@@ -88,9 +83,6 @@ if pregunta:
     st.session_state.messages.append({"role": "assistant", "content": respuesta})
 
 
-# ---------------------------------------------------------------------------
-# Parte 2: carga y transcripción de audio con Whisper
-# ---------------------------------------------------------------------------
 st.divider()
 st.subheader("🎤 Consulta mediante audio")
 
@@ -147,10 +139,6 @@ if audio is not None:
             if ruta_temp and os.path.exists(ruta_temp):
                 os.remove(ruta_temp)
 
-
-# ---------------------------------------------------------------------------
-# Botón para limpiar la conversación
-# ---------------------------------------------------------------------------
 st.divider()
 
 if st.button("Limpiar conversación"):
